@@ -76,9 +76,16 @@ establecidos en la fase de la toma de requisitos.
 
 Para ello debemos conocer y aplicar los patrones de diseño. Estos son soluciones (ya probadas y documentadas) a problemas de desarrollo conocidos.
 
-En el curso aplicaremos 3 patrones:
+En el curso aplicaremos 4 patrones:
 
+* [Patrón MVC Model View Controller](https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm) 
+* [Patrón DAO: Data Access Object.](https://www.tutorialspoint.com/design_pattern/data_access_object_pattern.htm).
+* [Patrón TO: Transfer Object.](https://www.tutorialspoint.com/design_pattern/transfer_object_pattern.htm). 
+* [Patrón DI: Dependency Injection.](https://es.wikipedia.org/wiki/Inyecci%C3%B3n_de_dependencias). 
 
+Los invito a revisar el siguiente enlace de Martin Fowler para complementar esta sección.
+
+* [Software Design](https://www.martinfowler.com/design.html). 
 
 #### [Ir a Contenido](#content-id)
 ---
