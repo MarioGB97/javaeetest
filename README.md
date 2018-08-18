@@ -4,9 +4,11 @@
 3. [Requisitos Software](#req-id)
 4. [Patrones de diseño](#pat-id)
 5. [Proyecto](#pro-id)
-6. [Servlet-JSP](#sp-id)
-7. [JSF](#jsf-id)
-8. [JPA](#jpa-id)
+6. [Servlet-JavaServer Pages(JSP)](#sp-id)
+7. [JavaServer Faces(JSF)](#jsf-id)
+8. [Context Dependency Injection (CDI)](#jsf-id)
+9. [Configuración de DataSource en Wildfly](#jsf-id)
+10. [Java Persistence API (JPA)](#jpa-id)
 
 ---
 ## <a name="intro-id"></a>Introducción
@@ -90,12 +92,306 @@ Los invito a revisar el siguiente enlace de Martin Fowler para complementar esta
 #### [Ir a Contenido](#content-id)
 ---
 ## <a name="pro-id"></a>Proyecto
+Debes ingresar a tu IDE para crear un proyecto maven.
+
+* Ir a `File` > `New` > `Maven Project`.
+
+    ![Getting Started](./images/3.png)
+
+* Crearemos un proyecto simple, marca la opción `Create  a simple project(skip archetype selection)`.
+
+    ![Getting Started](./images/4.png)
+
+* Ingresamos los datos de `Group Id`, `Artifact Id` y seleccionamos como `Packaging` **war**  .
+
+    ![Getting Started](./images/5.png)
+
+* Luego agregamos el siguiente bloque de codigo en el archivo `pom.xml`, para actualizar a Java 8 nuestro proyecto. No olvide guardar los cambios.
+
+    ```xml
+    <build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+    ```
+* El siguiente mensaje de error se genera porque necesitamos generar el archivo `web.xml`.
+
+    ![Getting Started](./images/6.png)
+
+    Para generar este archivo debes dar click derecho en el proyecto y seleccionar `Generate Deployment Descriptor Sub`.
+
+    ![Getting Started](./images/7.png)
+  
+    Debemos actualizar el codigo del archivo `web.xml` por el siguiente.
+
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+        <display-name>app1</display-name>
+        <welcome-file-list>
+            <welcome-file>index.jsp</welcome-file>
+        </welcome-file-list>
+    </web-app>
+    ```
+
+    Luego para actualizar el proyecto debes dar nuevamente click derecho y elegir `Maven` > `Update Project`.
+
+    ![Getting Started](./images/8.png)
+
+* Debemos agregar las siguientes dependencias en el archivo `pom.xml`. 
+
+    ```xml
+    <dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>4.0.1</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+    ```
+
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="sp-id"></a>Servlet - JSP
+## <a name="sp-id"></a>Servlet- JavaServer Pages (JSP)
+Antes de iniciar con la creación de un Servlet y JSP en el proyecto creado en la sección anterior debemos dar una definición de cada uno de estos componentes.
+
+Video 
+[![ServletJSP](./images/9.png)](https://www.youtube.com/watch?v=cWCVSNqjy5Q "ServletJSP")
+
+* Servlet 
+
+    Servlet API es un componente fundamental de la parte principal del servidor Java y parte de las tecnologías Java EE, como JAX-RS para servicios web, JSF (JavaServer Faces) y JSP (JavaServer Pages). Dentro de sus caracteristicas incluyen filtros, seguridad web y características para manejar solicitudes y respuestas HTTP.
+
+    En el siguiente enlace podras encontrar videos sobre las nuevas caracteristicas de [Servlet 4.0 ](https://www.ibm.com/developerworks/library/j-javaee8-servlet4/index.html).
+
+* JavaServer Pages (JSP)
+
+    Los JavaServer Pages son páginas que permiten vincular parte de lógica java, si en los servlet tenemos una clase y metemos código html aquí es lo contrario, estas permiten crear contenido web dinámico que luego se procesa traduciendo el jsp a un servlet que es compilado y ejecutado.
+
+    Junto con JSP, se suele trabajar también con  [JSTL (JavaServer Pages Standard Tag Library)](https://www.tutorialspoint.com/jsp/jsp_standard_tag_library.htm)., una de las muchas librerías de etiquetas que podemos utilizar, que sirve para extenderla.
+
+     En el siguiente enlace podras encontrar mas información sobre [JSP ](https://www.ibm.com/developerworks/java/tutorials/j-introjsp/j-introjsp.html).
+
+Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
+> * Model: Un Java Class que tendra la información de `Student`.
+> * Controller:  Un Servlet `StudentController` para la gestión de las peticiones y respuestas mediante el protocolo HTTP.
+> * Vista:  Un JSP que contendra el HTML, CSS y el uso de JSTL para extender su funcionalidad.
+
+y Patrón TO para separar la logica de negocio en un Java Class.
+> * Service: Un Java Class `StudentService` donde se implemente la logica de negocio.
+
+A continuación los pasos a seguir.
+
+* Creamos el Java Class `Student`.
+
+    ![Getting Started](./images/10.png)
+
+    ![Getting Started](./images/11.png)
+
+    ```java
+        package com.hamp.javaee.model;
+
+        public class Student {
+            
+            private int id;
+            private String firstName;
+            private String lastName;
+            
+            // constructors, getters and setters  here
+
+        }
+
+     ```
+
+* Creamos el Java Class `StudentService`
+
+    ![Getting Started](./images/10.png)
+
+    ![Getting Started](./images/12.png)
+
+    ```java
+        package com.hamp.javaee.service;
+
+        import java.util.Optional;
+
+        import com.hamp.javaee.model.Student;
+
+        public class StudentService {
+
+            public Optional<Student> getStudent(int id) {
+                switch (id) {
+                case 1:
+                    return Optional.of(new Student(1, "Henry", "Mendoza Puerta"));
+                case 2:
+                    return Optional.of(new Student(2, "Alexandra", "Melendez Leon"));
+                case 3:
+                    return Optional.of(new Student(3, "Max", "Sanchez Rodriguez"));
+                default:
+                    return Optional.empty();
+                }
+            }
+
+        }
+
+     ```
+
+* Creamos el Servlet `StudentController`
+    
+    ![Getting Started](./images/13.png)
+
+    ![Getting Started](./images/14.png)
+
+    ![Getting Started](./images/16.png)
+
+    ```java
+        package com.hamp.javaee.controller;
+
+        import java.io.IOException;
+
+        import javax.servlet.RequestDispatcher;
+        import javax.servlet.ServletException;
+        import javax.servlet.annotation.WebServlet;
+        import javax.servlet.http.HttpServlet;
+        import javax.servlet.http.HttpServletRequest;
+        import javax.servlet.http.HttpServletResponse;
+
+        import com.hamp.javaee.service.StudentService;
+
+
+        @WebServlet("/StudentController")
+        public class StudentController extends HttpServlet {
+            private static final long serialVersionUID = 1L;
+            private final StudentService studentService = new StudentService();
+
+
+            public StudentController() {
+                super();
+                // TODO Auto-generated constructor stub
+            }
+
+            
+            protected void doGet(HttpServletRequest request, HttpServletResponse response)
+                    throws ServletException, IOException {
+                // TODO Auto-generated method stub
+                response.getWriter().append("Served at: ").append(request.getContextPath());
+            }
+
+            
+            protected void doPost(HttpServletRequest request, HttpServletResponse response)
+                    throws ServletException, IOException {
+                // TODO Auto-generated method stub
+                String studentID = request.getParameter("id");
+                if (studentID != null) {
+                    int id = Integer.parseInt(studentID);
+                    studentService.getStudent(id).ifPresent(s -> request.setAttribute("studentRecord", s));
+                }
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/result.jsp");
+                dispatcher.forward(request, response);
+            }
+
+        }
+
+     ```
+* Creamos las vistas `index.jsp` y `result.jsp`
+
+    ![Getting Started](./images/13.png)
+
+    ![Getting Started](./images/18.png)
+
+    ```jsp
+        <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+        <html>
+        <head>
+        <title>Servlet-JSP</title>
+        </head>
+        <body>
+
+            <form name="bmiForm" action="StudentController" method="POST">
+
+                <table>
+                    <tr>
+                        <td>Id :</td>
+                        <td><input type="text" name="id" /></td>
+                    </tr>
+
+                    <input type="submit" value="Submit" name="Send" />
+
+                </table>
+
+            </form>
+
+        </body>
+        </html>
+
+     ```
+
+
+    ![Getting Started](./images/19.png)
+
+    ```jsp
+        <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+        pageEncoding="ISO-8859-1"%>
+
+        <%@ page import="com.hamp.javaee.model.Student"%>
+        <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+        <html>
+        <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Student Record</title>
+        </head>
+        <body>
+            <%
+                if (request.getAttribute("studentRecord") != null) {
+                    Student student = (Student) request.getAttribute("studentRecord");
+            %>
+
+            <h1>Student Record</h1>
+            <div>
+                ID:
+                <%=student.getId()%></div>
+            <div>
+                First Name:
+                <%=student.getFirstName()%></div>
+            <div>
+                Last Name:
+                <%=student.getLastName()%></div>
+
+            <%
+                } else {
+            %>
+            <h1>No student record found.</h1>
+            <%
+                }
+            %>
+        </body>
+        </html>
+
+     ```
+
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="jsf-id"></a>JSF
+## <a name="jsf-id"></a>Java Server Faces (JSF)
 #### [Ir a Contenido](#content-id)
 ---
 ## <a name="jpa-id"></a>JPA
