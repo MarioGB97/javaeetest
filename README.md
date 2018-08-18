@@ -78,10 +78,10 @@ Para ello debemos conocer y aplicar los patrones de diseño. Estos son solucione
 
 En la implementación del la aplicación utilizaremos 4 patrones:
 
-* [Patrón MVC Model View Controller.](https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm) 
-* [Patrón DAO: Data Access Object.](https://www.tutorialspoint.com/design_pattern/data_access_object_pattern.htm)
-* [Patrón TO: Transfer Object.](https://www.tutorialspoint.com/design_pattern/transfer_object_pattern.htm) 
-* [Patrón DI: Dependency Injection.](https://es.wikipedia.org/wiki/Inyecci%C3%B3n_de_dependencias) 
+* [Patrón MVC (Model View Controller).](https://www.tutorialspoint.com/design_pattern/mvc_pattern.htm) 
+* [Patrón DAO (Data Access Object).](https://www.tutorialspoint.com/design_pattern/data_access_object_pattern.htm)
+* [Patrón TO (Transfer Object).](https://www.tutorialspoint.com/design_pattern/transfer_object_pattern.htm) 
+* [Patrón DI (Dependency Injection).](https://es.wikipedia.org/wiki/Inyecci%C3%B3n_de_dependencias) 
 
 Los invito a revisar el siguiente enlace de Martin Fowler para complementar esta sección.
 
