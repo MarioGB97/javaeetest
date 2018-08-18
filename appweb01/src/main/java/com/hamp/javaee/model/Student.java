@@ -7,11 +7,6 @@ public class Student {
 	private String lastName;
 
 	// constructors, getters and setters here
-
-	public Student() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	public Student(int id, String firstName, String lastName) {
 		super();
 		this.id = id;
