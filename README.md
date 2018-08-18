@@ -2,7 +2,7 @@
 1. [Introducción](#intro-id)
 2. [Java EE 8](#java-id)
 3. [Requisitos Software](#req-id)
-4. [Patrones](#pat-id)
+4. [Patrones de diseño](#pat-id)
 5. [Proyecto](#pro-id)
 6. [Servlet-JSP](#sp-id)
 7. [JSF](#jsf-id)
@@ -70,7 +70,16 @@ En el siguiente enlace encontraras el software que debes instalar y configurar.
 #### [Ir a Contenido](#content-id)
 ---
 
-## <a name="pat-id"></a>Patrones
+## <a name="pat-id"></a>Patrones de diseño
+Una fase muy importante en el ciclo de vida de un proyecto es el Diseño del Software. Se trata de una etapa fundamental y en muchas ocasiones la más importante en el desarrollo de Software. Es el momento en que los profesionales tienen que aportar sus conocimientos, experiencia y creatividad para llegar a una solución que cumpla con los requisitos funcionales y no funcionales 
+establecidos en la fase de la toma de requisitos.
+
+Para ello debemos conocer y aplicar los patrones de diseño. Estos son soluciones (ya probadas y documentadas) a problemas de desarrollo conocidos.
+
+En el curso aplicaremos 3 patrones:
+
+
+
 #### [Ir a Contenido](#content-id)
 ---
 ## <a name="pro-id"></a>Proyecto
