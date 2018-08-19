@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<ui:composition template="/WEB-INF/templates/master.xhtml">
+
+		<ui:define name="content">
+	Personas
+	<h:form id="frm">
+				<p:dataTable value="#{personController.listPersons}" var="p"
+					stickyHeader="true" rows="10" paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15">
+
+					<p:column headerText="ID">
+						<p:outputLabel value="#{p.idPerson}" />
+					</p:column>
+
+					<p:column headerText="Nombres">
+						<p:outputLabel value="#{p.name}" />
+					</p:column>
+
+					<p:column headerText="Apellidos">
+						<p:outputLabel value="#{p.lastName}" />
+					</p:column>
+
+					<p:column headerText="Edad">
+						<p:outputLabel value="#{p.age}" />
+					</p:column>
+
+					<p:column headerText="Acción">
+						<p:commandLink value="Ver" oncomplete="PF('dlg').show()"
+							actionListener="#{personController.showPerson(p) }"
+							update="frm:dialogo" />
+					</p:column>
+
+
+				</p:dataTable>
+
+				<p:dialog id="dialogo" widgetVar="dlg" header="Elemento"
+					modal="true" closeOnEscape="true" draggable="true"
+					resizable="false" showEffect="explode">
+					#{personController.person.idPerson}
+					#{personController.person.name}
+					#{personController.person.lastName}
+				</p:dialog>
+
+
+
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>

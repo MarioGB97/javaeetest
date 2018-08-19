@@ -5,10 +5,9 @@
 4. [Patrones de diseño](#pat-id)
 5. [Proyecto](#pro-id)
 6. [Servlet-JavaServer Pages(JSP)](#sp-id)
-7. [JavaServer Faces(JSF)](#jsf-id)
-8. [Context Dependency Injection (CDI)](#jsf-id)
-9. [Configuración de DataSource en Wildfly](#jsf-id)
-10. [Java Persistence API (JPA)](#jpa-id)
+7. [JavaServer Faces(JSF) y Context Dependency Injection (CDI)](#jsf-id)
+
+
 
 ---
 ## <a name="intro-id"></a>Introducción
@@ -195,7 +194,7 @@ Video
 Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
 > * Model: Un Java Class que tendra la información de `Student`.
 > * Controller:  Un Servlet `StudentController` para la gestión de las peticiones y respuestas mediante el protocolo HTTP.
-> * Vista:  Un JSP que contendra el HTML, CSS y el uso de JSTL para extender su funcionalidad.
+> * View:  Un JSP que contendra el HTML, CSS y el uso de JSTL para extender su funcionalidad.
 
 y Patrón TO para separar la logica de negocio en un Java Class.
 > * Service: Un Java Class `StudentService` donde se implemente la logica de negocio.
@@ -391,13 +390,729 @@ A continuación los pasos a seguir.
 
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="jsf-id"></a>Java Server Faces (JSF)
+## <a name="jsf-id"></a>Java Server Faces (JSF) y Context Dependency Injection (CDI)
+
+* **Java Server Faces (JSF)**
+
+    JSF es una tecnología que fué creada para simplificar la creación de interfaces web de usuario para aplicaciones web JavaEE.
+
+    Mediante ejemplos prácticos analizaremos las características de este framework, utilizando diferentes herramientas de desarrollo para crear nuestras aplicaciones web Java con JSF e integrarlas con otras tecnologías Java como EJB y JPA.
+
+    Algunas de las características principales de JSF son:
+
+    * Es un marco de trabajo (framework) para crear aplicaciones JavaEE basadas en el patrón de diseño MVC (Modelo-Vista-Controlador) y utilizando la API de Servlets.
+    * Utiliza páginas JSP para generar las vistas, añadiendo una biblioteca de etiquetas propia para crear componentes reutilizables: JavaScript, HTML, CSS, … que podrán ser desplegados en cualquier tipo de cliente (navegadores, móviles, …), ahorrando mucho tiempo en el desarrollo de aplicaciones web. Este concepto se conoce como Render Kits.
+    * JSF resuelve validaciones, conversiones, mensajes de error e internacionalización (i18n).
+    * Es extensible, pudiendo crearse nuevos elementos de la interfaz o modificar los ya existentes. JSF dispone de varias implementaciones diferentes, incluyendo un conjunto de etiquetas y APIs estándar que forman el núcleo del framework. Algunas de las implementaciones son: PrimeFaces, RichFaces, IceFaces, cada una de las cuales contiene un número diferente de componentes.
+    * Soporte nativo para AJAX, por tanto, facilita el tratamiento de peticiones asíncronas.
+    * Soporte por defecto para el uso de la tecnología de Facelets.
+    Y lo que es más importante: forma parte del estándar J2EE.
+
+    **Arquitectura general**:
+
+    En el caso de JSF  la definición de la interfaz se realiza en forma de páginas XHTML con distintos tipos de etiquetas que veremos más adelante. Estas páginas se denominan páginas JSF. La siguiente figura muestra el funcionamiento de JSF para generar una página por primera vez.
+
+    El navegador realiza una petición a una determinada URL en la que reside la página JSF que se quiere mostrar. En el servidor un servlet que llamamos motor de JSF recibe la petición y construye un árbol de componentes a partir de la página JSF que se solicita. Este árbol de componentes replica en forma de objetos Java la estructura de la página JSF original y representa la estructura de la página que se va a devolver al navegador. Una vez construido el árbol de componentes, se ejecuta código Java en el servidor para rellenar los elementos del árbol con los datos de la aplicación. Por último, a partir del árbol de componentes se genera la página HTML que se envía al navegador.
+
+    **MVC con JSF**
+    * Lado del cliente:
+
+        Vistas web: HTML, CSS.
+    * Lado  del servidor:
+
+        Capa de Presentación: JSF, Primefaces.
+
+        Capa de Negocio (objetos de negocio): EJB.
+
+        Capa de Datos (objetos entidad): JPA.
+
+
+    ![Getting Started](./images/21.png)
+
+* **Context Dependency Injection (CDI)**
+
+    Contexts and Dependency Injection (CDI) es el marco de inyección de dependencia primario de Java EE. Fue presentado con Java EE 6 en 2009. CDI se está convirtiendo lentamente en la columna vertebral de todos de Java EE. JSF 2.3, por ejemplo, ha desaprobado por completo su propio modelo de beans gestionados (@ManagedBean) por  la inyección de dependencias a favor de CDI mediante el uso de @Named.
+
+    CDI se activa en una aplicación mediante la presencia de un archivo `beans.xml` dentro de ese módulo, tal como se define en la especificación `JSR 299`. Puede encontrar el archivo `beans.xml` en el directorio `WEB-INF`. Cuando se activa, el contenedor proporciona servicios tales como:
+
+> * Gestión de contexto
+> * Inyección de dependencia de tipo seguro: se crea una instancia de un bean gestionado por CDI y se inyecta cuando sea necesario.
+> * Decoradores, que implementan una o más interfaces de bean y que pueden contener lógica empresarial. Los decoradores están inhabilitados de forma predeterminada. Puede tener varios decoradores por bean, y el orden se define mediante el archivo beans.xml.
+> * Enlaces de interceptor. Los interceptores, que se habilitan manualmente en el archivo beans.xml, se enlazan mediante un tipo de enlace de interceptor.
+> * Integración en archivos JavaServer Faces (JSF) y JavaServer Pages (JSP) utilizando el Lenguaje de Expresión (EL)
+
+    
+
+Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
+
+* Model: es el encargado de almacenar los datos de la aplicación web. Se puede implementar con clases java (POJO: Plain Old Java Object) o con Managed Bean de modelo.
+* View: define la interfaz de usuario utilizando JSF (Facelets) y primefaces para desplegar la información del modelo.
+* Controller: define el flujo de la aplicación y las interacciones del usuario. Se puede implementar con Managed Bean de control.
+
+Debes crear un nuevo proyecto como se hizo en la sección de [Proyecto](#pro-id) y el archivo `pom.xml` es el siguiente.
+
+```xml
+
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.hamp.javaee</groupId>
+	<artifactId>appweb02</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.faces</groupId>
+			<artifactId>javax.faces-api</artifactId>
+			<version>2.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<build>
+		<finalName>appweb02</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+```
+Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
+
+```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <web-app version="3.1"
+        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+
+        <servlet>
+            <servlet-name>Faces Servlet</servlet-name>
+            <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+            <load-on-startup>1</load-on-startup>
+        </servlet>
+
+        <servlet-mapping>
+            <servlet-name>Faces Servlet</servlet-name>
+            <url-pattern>*.xhtml</url-pattern>
+        </servlet-mapping>
+
+        <welcome-file-list>
+            <welcome-file>index.xhtml</welcome-file>
+        </welcome-file-list>
+
+    </web-app>
+
+```
+* Activar CDI en el Proyecto con `beans.xml`.
+
+    ![Getting Started](./images/26.png)
+
+    ```xml
+        <?xml version="1.0"?>
+        <beans bean-discovery-mode="all" version="1.1"
+        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"/>
+
+
+    ```
+
+* Creamos Java Class Modelo `Person`.
+
+    ![Getting Started](./images/22.png)
+
+    ```java
+    package com.hamp.javaee.model;
+
+    import java.io.Serializable;
+
+    public class Person implements Serializable {
+
+        private int idPerson;
+        private String name;
+        private String lastName;
+        private int age;
+
+        public int getIdPerson() {
+            return idPerson;
+        }
+
+        public void setIdPerson(int idPerson) {
+            this.idPerson = idPerson;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getLastName() {
+            return lastName;
+        }
+
+        public void setLastName(String lastName) {
+            this.lastName = lastName;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+    }
+
+    ```
+
+* Creamos interface DAO generica `IDAO`.
+
+    ![Getting Started](./images/27.png)
+
+    ```java
+    package com.hamp.javaee.dao;
+
+    import java.util.List;
+
+    public interface IDAO<T> {
+        List<T> findAll();
+    }
+
+    ```
+
+* Creamos Interface DAO  `IPersonDAO`.
+
+    ![Getting Started](./images/28.png)
+
+    ```java
+    package com.hamp.javaee.dao;
+
+    import com.hamp.javaee.model.Person;
+
+    public interface IPersonDAO extends IDAO<Person> {
+
+    }
+
+    ```
+
+* Creamos Java Class DAO `PersonDAO`.
+
+    ![Getting Started](./images/23.png)
+
+    ```java
+        package com.hamp.javaee.dao.impl;
+
+        import java.io.Serializable;
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import javax.inject.Named;
+
+        import com.hamp.javaee.dao.IPersonDAO;
+        import com.hamp.javaee.model.Person;
+
+        @Named
+        public class PersonDAO implements IPersonDAO,Serializable {
+
+            
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public List<Person> findAll() {
+                List<Person> lista = new ArrayList<>();
+                for (int i = 0; i < 100; i++) {
+                    Person per = new Person();
+                    per.setIdPerson(i);
+                    per.setName("Henry Antonio");
+                    per.setLastName("Mendoza Puerta");
+                    per.setAge(38);
+                    lista.add(per);
+                }
+
+                return lista;
+            }
+
+        }
+
+    ```
+
+* Creamos interface Service `IPersonService`.
+    ![Getting Started](./images/30.png)
+
+    ```java
+        package com.hamp.javaee.service;
+
+        import java.util.List;
+
+        import com.hamp.javaee.model.Person;
+
+        public interface IPersonService {
+            
+            List<Person> findAll();
+
+        }
+    ```
+
+* Creamos Java Class Service `PersonService`.
+
+    ![Getting Started](./images/24.png)
+
+    ```java
+        package com.hamp.javaee.service.impl;
+
+        import java.io.Serializable;
+        import java.util.List;
+
+        import javax.inject.Inject;
+        import javax.inject.Named;
+
+        import com.hamp.javaee.dao.IPersonDAO;
+        import com.hamp.javaee.model.Person;
+        import com.hamp.javaee.service.IPersonService;
+
+        @Named
+        public class PersonService implements IPersonService, Serializable{
+
+
+            private static final long serialVersionUID = 1L;
+            @Inject
+            private IPersonDAO pdao;
+
+            @Override
+            public List<Person> findAll() {
+                // TODO Auto-generated method stub
+                return pdao.findAll();
+            }
+
+        }
+
+    ```
+
+* Creamos Java Class Controller `PersonController`.
+
+    ![Getting Started](./images/25.png)
+
+    ```java
+        package com.hamp.javaee.controller;
+
+        import java.util.ArrayList;
+        import java.util.List;
+
+        import javax.annotation.PostConstruct;
+        import javax.faces.view.ViewScoped;
+        import javax.inject.Inject;
+        import javax.inject.Named;
+
+        import com.hamp.javaee.model.Person;
+        import com.hamp.javaee.service.IPersonService;
+
+
+        import java.io.Serializable;
+
+        @Named
+        @ViewScoped
+        public class PersonController implements Serializable {
+
+            
+            private static final long serialVersionUID = 1L;
+            
+            private List<Person> listPersons;
+            private Person person;
+
+            @Inject
+            private IPersonService pService;
+
+            public PersonController() {
+                listPersons = new ArrayList<>();
+
+            }
+
+            @PostConstruct
+            public void init() {
+                this.findAdll();
+            }
+
+            public void findAdll() {
+                this.listPersons = pService.findAll();
+            }
+            
+            public void showPerson(Person per) {
+                this.person = per;
+            }
+
+            public List<Person> getListPersons() {
+                return listPersons;
+            }
+
+            public void setListPersons(List<Person> listPersons) {
+                this.listPersons = listPersons;
+            }
+
+            public Person getPerson() {
+                return person;
+            }
+
+            public void setPerson(Person person) {
+                this.person = person;
+            }
+
+        }
+
+    ```
+* Creamos Java Class Controller `IndexController`.
+
+    ![Getting Started](./images/31.png)
+
+    ```java
+        package com.hamp.javaee.controller;
+
+        import java.io.Serializable;
+
+        import javax.faces.view.ViewScoped;
+        import javax.inject.Named;
+
+        @Named
+        @ViewScoped
+        public class IndexController implements Serializable {
+
+            private static final long serialVersionUID = 1L;
+
+            public String login() {
+                String redireccion = null;
+                try {
+
+                    redireccion = "/protegido/persons?faces-redirect=true";
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return redireccion;
+            }
+
+        }
+
+    ```
+* Creamos folder `resources` dentro del folder `webapp` y un folder `css` dentro del folder `resources`.
+
+
+    ![Getting Started](./images/32.png)
+
+   
+* Creamos 2 archivos css dentro del folder `css` con el nombre de `estilos.css` y `index.css`.
+
+    ![Getting Started](./images/33.png)
+
+    Archivo estilos.css 
+    ```css
+       .resolucion {     
+            width: 800px; margin: 0 auto;            
+        }
+
+        .ui-widget {
+            font-size: 82% !important;
+        }
+        .ui-widget .ui-widget {
+            font-size: 100% !important;
+        }
+
+        body{
+            font-family: Lato; 
+        }
+
+    ```
+
+    Archivo index.css 
+    ```css
+       .centerDiv {
+            width: 100px;
+            height: 100px;
+
+            position: absolute;
+            top:0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            margin: auto;
+        }
+
+        .registrarDiv {
+            width: 100px;
+            height: 100px;
+
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            margin: auto;
+            margin-top: -1px;
+        }
+
+        .ui-widget {
+            font-size: 90%;
+        }
+        .ui-widget .ui-widget {
+            font-size: 100%;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-size: 12px;
+            font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+            color: #000000;  
+            margin: 10px;
+        }
+
+        h1 {
+            
+            font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+            border-bottom: 1px solid #AFAFAF; 
+            font-size:  16px;
+            font-weight: bold;
+            margin: 0px;
+            padding: 0px;
+            color: #D20005;
+        }
+
+        a:link, a:visited {
+        color: #045491;
+        font-weight : bold;
+        text-decoration: none;
+        }
+
+        a:link:hover, a:visited:hover  {
+        color: #045491;
+        font-weight : bold;
+        text-decoration : underline;
+        }
+    ```
+* Creamos un folder  `templates` dentro de `WEB-INF`.
+
+    ![Getting Started](./images/32.png)
+
+* Creamos Facelets `master.xhtml` dentro del folder `templates`.
+
+    ![Getting Started](./images/34.png)
+
+    ![Getting Started](./images/35.png)
+
+    ```xml
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:p="http://primefaces.org/ui">
+
+        <h:head>
+            <h:outputStylesheet library="css" name="estilos.css" />
+        </h:head>
+        <body class="resolucion">
+            <ui:insert name="header">
+                <h:form>
+                    <p:menubar autoDisplay="false">
+                        <p:menuitem icon="ui-icon-home" value="Inicio" url="#" />
+
+                        <p:submenu label="Mantenedores" icon="ui-icon-pencil">
+                            <p:menuitem icon="ui-icon-document" value="Personas"
+                                url="/protegido/persons.xhtml" />
+                            <p:menuitem icon="ui-icon-document" value="Usuarios" url="#" />
+                        </p:submenu>
+
+                        <f:facet name="options">
+                            <p:commandButton icon="ui-icon-power" url="/index.xhtml" />
+                        </f:facet>
+
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
+
+            <ui:insert name="content">
+
+            </ui:insert>
+
+
+            <ui:insert name="footer">
+                <div>Copyright © HAMP, 2018. Todos los derechos reservados</div>
+            </ui:insert>
+        </body>
+        </html>
+    ```
+
+* Creamos un folder  con nombre `protegido` dentro de `webapp`.
+
+    ![Getting Started](./images/32.png)
+
+* Creamos Facelets `persons.xhtml` dentro del folder `protegido`.
+
+    ![Getting Started](./images/34.png)
+
+    ![Getting Started](./images/35.png)
+
+    ```xml
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+
+    <h:head></h:head>
+    <body>
+
+        <ui:composition template="/WEB-INF/templates/master.xhtml">
+
+            <ui:define name="content">
+        Personas
+        <h:form id="frm">
+                    <p:dataTable value="#{personController.listPersons}" var="p"
+                        stickyHeader="true" rows="10" paginator="true"
+                        paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        rowsPerPageTemplate="5,10,15">
+
+                        <p:column headerText="ID">
+                            <p:outputLabel value="#{p.idPerson}" />
+                        </p:column>
+
+                        <p:column headerText="Nombres">
+                            <p:outputLabel value="#{p.name}" />
+                        </p:column>
+
+                        <p:column headerText="Apellidos">
+                            <p:outputLabel value="#{p.lastName}" />
+                        </p:column>
+
+                        <p:column headerText="Edad">
+                            <p:outputLabel value="#{p.age}" />
+                        </p:column>
+
+                        <p:column headerText="Acción">
+                            <p:commandLink value="Ver" oncomplete="PF('dlg').show()"
+                                actionListener="#{personController.showPerson(p) }"
+                                update="frm:dialogo" />
+                        </p:column>
+
+
+                    </p:dataTable>
+
+                    <p:dialog id="dialogo" widgetVar="dlg" header="Elemento"
+                        modal="true" closeOnEscape="true" draggable="true"
+                        resizable="false" showEffect="explode">
+                        #{personController.person.idPerson}
+                        #{personController.person.name}
+                        #{personController.person.lastName}
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+    </html>
+
+    ```
+
+* Creamos Facelets `index.xhtml` dentro del folder `webapp`.
+
+    ![Getting Started](./images/34.png)
+
+    ![Getting Started](./images/35.png)
+
+    ```xml
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:ui="http://java.sun.com/jsf/facelets"
+            xmlns:f="http://java.sun.com/jsf/core"
+            xmlns:h="http://java.sun.com/jsf/html"
+            xmlns:p="http://primefaces.org/ui">
+
+        <h:head>
+            <link href="./resources/css/index.css" rel="stylesheet" type="text/css" />
+        </h:head>
+        <body>
+
+            <h:form>
+                <div class="centerDiv" style="width: 400px">
+                    <p:panel>
+                        <f:facet name="header">Login</f:facet>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="txtLogin" value="Usuario:" />
+                            <h:inputText id="txtLogin" />
+                            <p:outputLabel for="txtContrasena" value="Contraseña:" />
+                            <h:inputSecret id="txtContrasena" />
+                        </h:panelGrid>
+                        <p:commandButton value="Login" action="#{indexController.login()}" />
+
+                    </p:panel>
+                </div>
+            </h:form>
+        </body>
+        </html>
+    ```
+
+    * Ejecuta la aplicación dando click derecho al proyecto.
+
+        ![Getting Started](./images/40.png)
+
+        ![Getting Started](./images/41.png)
+
+        ![Getting Started](./images/38.png)
+
+        ![Getting Started](./images/39.png)
+
+
+
+
+
+
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="jpa-id"></a>JPA
-#### [Ir a Contenido](#content-id)
----
-## CDI
+
 
 
 
