@@ -1106,7 +1106,7 @@ Revisar: [JDBC](https://www.tutorialspoint.com/jdbc/)
 
 ## <a name="ejerjdbc-id"></a>8.1. Ejercicio
 
-* Debemos agregar la dependencia del `driver de mysql` al archivo `pom.xml`.
+* Agregar la dependencia del `driver de mysql` al archivo `pom.xml`.
 
 ```xml
 <dependency>
@@ -1115,6 +1115,139 @@ Revisar: [JDBC](https://www.tutorialspoint.com/jdbc/)
 	<version>5.1.6</version>
 </dependency>
 ```
+* Crear un archivo de `Properties` dentro de `src/main/java`.
+
+    ![Getting Started](./images/43.png)
+
+  indicamos las siguientes propiedades.
+
+  ```xml
+    driver=com.mysql.jdbc.Driver   
+    url=jdbc:mysql://localhost:3306/dbcrud    
+    user=root    
+    password=adminadmin
+  ```
+
+* Crear Java Class con el nombre de `Conexion` en el paquete `com.hamp.javaee.dao`.
+
+    ![Getting Started](./images/44.png)
+
+* El codigo de la clase `Conexion` es el siguiente.
+
+  ```java
+    package com.hamp.javaee.dao;
+
+    import java.io.InputStream;
+    import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.util.Properties;
+
+    public class Conexion {
+
+        protected static Connection cx; 
+                
+        public static Connection conectar() {
+            if(cx != null) {
+                return cx;
+            }
+            
+            InputStream inputStream = Conexion.class.getClassLoader().getResourceAsStream("db.properties");
+            Properties properties = new Properties();	
+            
+            try {
+                properties.load(inputStream);
+                String driver = properties.getProperty("driver");
+                String url = properties.getProperty("url");
+                String user = properties.getProperty("user");
+                String password = properties.getProperty("password");
+                Class.forName(driver);
+                cx = DriverManager.getConnection(url, user, password);
+                System.out.println("Se conect� a la base de datos");
+            }catch(Exception e) {
+                e.printStackTrace();
+            }
+            return cx;
+        }
+        
+        public static void desconectar(){
+            if(cx == null){
+                return;
+            }
+            
+            try{
+                cx.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+  ```
+* Editamos el codigo de la clase `PersonDAO` por el siguiente.
+  
+  ```java
+    package com.hamp.javaee.dao.impl;
+
+    import java.io.Serializable;
+    import java.sql.Connection;
+    import java.sql.ResultSet;
+    import java.sql.Statement;
+    import java.util.ArrayList;
+    import java.util.List;
+
+    import javax.inject.Named;
+
+    import com.hamp.javaee.dao.Conexion;
+    import com.hamp.javaee.dao.IPersonDAO;
+    import com.hamp.javaee.model.Person;
+
+    @Named
+    public class PersonDAO implements IPersonDAO, Serializable {
+
+        private static final long serialVersionUID = 1L;
+
+        private Connection cx;
+
+        public PersonDAO() {
+            cx = Conexion.conectar();
+        }
+
+        @Override
+        public List<Person> findAll() {
+            List<Person> lista = new ArrayList<>();
+            try {
+                Statement statement = cx.createStatement();
+                ResultSet resultSet = statement.executeQuery("SELECT * FROM Person");
+                while (resultSet.next()) {
+                    Person person = new Person();
+                    person.setIdPerson(resultSet.getInt("idPerson"));
+                    person.setName(resultSet.getString("name"));
+                    person.setLastName(resultSet.getString("lastName"));
+                    person.setAge(resultSet.getInt("age"));
+                    lista.add(person);
+                }
+                resultSet.close();
+                statement.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return lista;
+        }
+
+    }
+
+  ```
+  * Debemos crear una base de datos en MySQL `dbcrud` con una tabla `Person`.
+    
+    ![Getting Started](./images/45.png)
+
+    ![Getting Started](./images/46.png)
+
+    ![Getting Started](./images/47.png)
+
+  * Ejecutamos la aplicacion.
+
+    ![Getting Started](./images/48.png)
 
 #### [Ir a Contenido](#content-id)
 ---    
