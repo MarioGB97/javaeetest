@@ -209,12 +209,12 @@ En el siguiente enlace podras encontrar mas información sobre [JSP ](https://ww
 
 ## <a name="ejerservletjsp-id"></a>6.3 Ejercicio
 Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
-> * Model: Un Java Class que tendra la información de `Student`.
-> * Controller:  Un Servlet `StudentController` para la gestión de las peticiones y respuestas mediante el protocolo HTTP.
-> * View:  Un JSP que contendra el HTML, CSS y el uso de JSTL para extender su funcionalidad.
+* Model: Un Java Class que tendra la información de `Student`.
+* Controller:  Un Servlet `StudentController` para la gestión de las peticiones y respuestas mediante el protocolo HTTP.
+* View:  Un JSP que contendra el HTML, CSS y el uso de JSTL para extender su funcionalidad.
 
 y Patrón TO para separar la logica de negocio en un Java Class.
-> * Service: Un Java Class `StudentService` donde se implemente la logica de negocio.
+* Service: Un Java Class `StudentService` donde se implemente la logica de negocio.
 
 A continuación los pasos a seguir.
 
