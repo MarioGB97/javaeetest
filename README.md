@@ -185,10 +185,16 @@ Debes ingresar a tu IDE para crear un proyecto maven.
 Antes de iniciar con la creación de un Servlet y JSP en el proyecto creado en la sección anterior revisa el siguiente video.
 [![ServletJSP](./images/9.png)](https://www.youtube.com/watch?v=cWCVSNqjy5Q "ServletJSP")
 
+#### [Ir a Contenido](#content-id)
+--- 
+
 ## <a name="servlet-id"></a>6.1 Servlet.
 Servlet API es un componente fundamental de la parte principal del servidor Java y parte de las tecnologías Java EE,como JAX-RS para servicios web, JSF (JavaServer Faces) y JSP (JavaServer Pages). Dentro de sus caracteristicas incluyen filtros, seguridad web y características para manejar solicitudes y respuestas HTTP.
 
 En el siguiente enlace podras encontrar videos sobre las nuevas caracteristicas de [Servlet 4.0 ](https://www.ibm.com/developerworks/library/j-javaee8-servlet4/index.html).
+
+#### [Ir a Contenido](#content-id)
+--- 
 
 ## <a name="jsp-id"></a>6.2 JavaServer Pages (JSP)
 
@@ -197,6 +203,9 @@ Los JavaServer Pages son páginas que permiten vincular parte de lógica java, s
 Junto con JSP, se suele trabajar también con  [JSTL (JavaServer Pages Standard Tag Library)](https://www.tutorialspoint.com/jsp/jsp_standard_tag_library.htm)., una de las muchas librerías de etiquetas que podemos utilizar, que sirve para extenderla.
 
 En el siguiente enlace podras encontrar mas información sobre [JSP ](https://www.ibm.com/developerworks/java/tutorials/j-introjsp/j-introjsp.html).
+
+#### [Ir a Contenido](#content-id)
+--- 
 
 ## <a name="ejerservletjsp-id"></a>6.3 Ejercicio
 Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
@@ -420,6 +429,9 @@ El navegador realiza una petición a una determinada URL en la que reside la pá
 
     ![Getting Started](./images/21.png)
 
+#### [Ir a Contenido](#content-id)
+--- 
+
 ## <a name="cdi-id"></a>7.2. Context Dependency Injection (CDI)
 
 Contexts and Dependency Injection (CDI) es el marco de inyección de dependencia primario de Java EE. Fue presentado con Java EE 6 en 2009. CDI se está convirtiendo lentamente en la columna vertebral de todos de Java EE. JSF 2.3, por ejemplo, ha desaprobado por completo su propio modelo de beans gestionados (@ManagedBean) por  la inyección de dependencias a favor de CDI mediante el uso de @Named.
@@ -431,6 +443,9 @@ CDI se activa en una aplicación mediante la presencia de un archivo `beans.xml`
 * Decoradores, que implementan una o más interfaces de bean y que pueden contener lógica empresarial. Los decoradores están inhabilitados de forma predeterminada. Puede tener varios decoradores por bean, y el orden se define mediante el archivo beans.xml.
 * Enlaces de interceptor. Los interceptores, que se habilitan manualmente en el archivo beans.xml, se enlazan mediante un tipo de enlace de interceptor.
 * Integración en archivos JavaServer Faces (JSF) y JavaServer Pages (JSP) utilizando el Lenguaje de Expresión (EL)
+
+#### [Ir a Contenido](#content-id)
+--- 
 
 ## <a name="ejerjsfcdi-id"></a>7.3. Ejercicio
 
@@ -1086,6 +1101,9 @@ JDBC es un API (Application programming interface) que describe o define una lib
 Revisar: [JDBC](https://www.tutorialspoint.com/jdbc/)
     ![Getting Started](./images/30.jpg)
 
+#### [Ir a Contenido](#content-id)
+--- 
+
 ## <a name="ejerjdbc-id"></a>8.1. Ejercicio
 
 * Debemos agregar la dependencia del `driver de mysql` al archivo `pom.xml`.
@@ -1097,10 +1115,9 @@ Revisar: [JDBC](https://www.tutorialspoint.com/jdbc/)
 	<version>5.1.6</version>
 </dependency>
 ```
-        
-
 
 #### [Ir a Contenido](#content-id)
+---    
 
 
 
