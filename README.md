@@ -4,12 +4,19 @@
 3. [Requisitos Software](#req-id)
 4. [Patrones de diseño](#pat-id)
 5. [Proyecto](#pro-id)
-6. [Servlet-JavaServer Pages(JSP)](#sp-id)
-7. [JavaServer Faces(JSF) y Context Dependency Injection (CDI)](#jsf-id)    
-8. [Java Database Connectivity (JDBC)](#jdbc-id)
+6. [Servlet-JavaServer Pages(JSP)](#sp-id)  
+    6.1 [Servlet](#servlet-id)  
+    6.2 [JavaServer Pages(JSP)](#jsp-id)    
+    6.3 [Ejercicio](#ejerservletjsp-id)    
+7. [JavaServer Faces(JSF) y Context Dependency Injection (CDI)](#jsfcdi-id)    
+    7.1 [JavaServer Faces(JSF)](#jsf-id)    
+    7.2 [Context Dependency Injection (CDI)](#cdi-id)   
+    7.3 [Ejercicio](#ejerjsfcdi-id)        
+8. [Java Database Connectivity (JDBC)](#jdbc-id)    
+    8.1 [Ejercicio](#ejerjdbc-id)  
 
 ---
-## <a name="intro-id"></a>Introducción
+# <a name="intro-id"></a>1. Introducción
 En 2017 Oracle decidió dejar de controlar el desarrollo de Java EE y empezarían por buscar una organización open source a la que pasar la batuta. Esa organización terminó siendo la [Eclipse Foundation](https://www.eclipse.org/) , la misma comunidad detrás de la plataforma Eclipse que consiste en el IDE y el ambiente de desarrollo.
 
 Oracle dijo que la razón de esto era mejorar el proceso de desarrollo de Java EE que a pesar de ya desarrollarse de forma abierta con la ayuda de la comunidad, debería tener un proceso más flexible y abierto. Pero flexible es algo que Oracle no es a la hora de usar la marca Java, y por ello Java EE ha tenido que cambiar de nombre a Jakarta EE.
@@ -22,7 +29,7 @@ Java EE (Java Platform, Enterprise Edition) es una plataforma de programación p
 
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="java-id"></a> Java EE 8
+# <a name="java-id"></a> 2. Java EE 8
 Java EE 8 admite muchas nuevas especificaciones de tecnología Java, que incluyen:
 
  ![Getting Started](./images/1.png)
@@ -58,10 +65,14 @@ Este API es muy usado en el moderno paradigma de aplicaciones en la nube/PaaS. P
 Video 
 [![Java EE8](./images/2.jpg)](https://youtu.be/FCsqchsK9UA "Java EE8")
 
+En el curso implementaremos una aplicación con la siguiente arquitectura.
+
+![Getting Started](./images/50.jpg)
+
 #### [Ir a Contenido](#content-id)
 ---
 
-## <a name="req-id"></a>Requisitos de Software
+# <a name="req-id"></a>3. Requisitos de Software
 
 En el siguiente enlace encontraras el software que debes instalar y configurar.
 
@@ -70,7 +81,7 @@ En el siguiente enlace encontraras el software que debes instalar y configurar.
 #### [Ir a Contenido](#content-id)
 ---
 
-## <a name="pat-id"></a>Patrones de diseño
+# <a name="pat-id"></a>4. Patrones de diseño
 Una fase muy importante en el ciclo de vida de un proyecto es el Diseño del Software. Se trata de una etapa fundamental y en muchas ocasiones la más importante en el desarrollo de Software. Es el momento en que los profesionales tienen que aportar sus conocimientos, experiencia y creatividad para llegar a una solución que cumpla con los requisitos funcionales y no funcionales 
 establecidos en la fase de la toma de requisitos.
 
@@ -89,7 +100,7 @@ Los invito a revisar el siguiente enlace de Martin Fowler para complementar esta
 
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="pro-id"></a>Proyecto
+# <a name="pro-id"></a>5. Proyecto
 Debes ingresar a tu IDE para crear un proyecto maven.
 
 * Ir a `File` > `New` > `Maven Project`.
@@ -170,26 +181,24 @@ Debes ingresar a tu IDE para crear un proyecto maven.
 
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="sp-id"></a>Servlet- JavaServer Pages (JSP)
-Antes de iniciar con la creación de un Servlet y JSP en el proyecto creado en la sección anterior debemos dar una definición de cada uno de estos componentes.
-
-Video 
+# <a name="sp-id"></a>6. Servlet- JavaServer Pages (JSP)
+Antes de iniciar con la creación de un Servlet y JSP en el proyecto creado en la sección anterior revisa el siguiente video.
 [![ServletJSP](./images/9.png)](https://www.youtube.com/watch?v=cWCVSNqjy5Q "ServletJSP")
 
-* Servlet 
+## <a name="servlet-id"></a>6.1 Servlet.
+Servlet API es un componente fundamental de la parte principal del servidor Java y parte de las tecnologías Java EE,como JAX-RS para servicios web, JSF (JavaServer Faces) y JSP (JavaServer Pages). Dentro de sus caracteristicas incluyen filtros, seguridad web y características para manejar solicitudes y respuestas HTTP.
 
-    Servlet API es un componente fundamental de la parte principal del servidor Java y parte de las tecnologías Java EE, como JAX-RS para servicios web, JSF (JavaServer Faces) y JSP (JavaServer Pages). Dentro de sus caracteristicas incluyen filtros, seguridad web y características para manejar solicitudes y respuestas HTTP.
+En el siguiente enlace podras encontrar videos sobre las nuevas caracteristicas de [Servlet 4.0 ](https://www.ibm.com/developerworks/library/j-javaee8-servlet4/index.html).
 
-    En el siguiente enlace podras encontrar videos sobre las nuevas caracteristicas de [Servlet 4.0 ](https://www.ibm.com/developerworks/library/j-javaee8-servlet4/index.html).
+## <a name="jsp-id"></a>6.2 JavaServer Pages (JSP)
 
-* JavaServer Pages (JSP)
+Los JavaServer Pages son páginas que permiten vincular parte de lógica java, si en los servlet tenemos una clase y metemos código html aquí es lo contrario, estas permiten crear contenido web dinámico que luego se procesa traduciendo el jsp a un servlet que es compilado y ejecutado.
 
-    Los JavaServer Pages son páginas que permiten vincular parte de lógica java, si en los servlet tenemos una clase y metemos código html aquí es lo contrario, estas permiten crear contenido web dinámico que luego se procesa traduciendo el jsp a un servlet que es compilado y ejecutado.
+Junto con JSP, se suele trabajar también con  [JSTL (JavaServer Pages Standard Tag Library)](https://www.tutorialspoint.com/jsp/jsp_standard_tag_library.htm)., una de las muchas librerías de etiquetas que podemos utilizar, que sirve para extenderla.
 
-    Junto con JSP, se suele trabajar también con  [JSTL (JavaServer Pages Standard Tag Library)](https://www.tutorialspoint.com/jsp/jsp_standard_tag_library.htm)., una de las muchas librerías de etiquetas que podemos utilizar, que sirve para extenderla.
+En el siguiente enlace podras encontrar mas información sobre [JSP ](https://www.ibm.com/developerworks/java/tutorials/j-introjsp/j-introjsp.html).
 
-     En el siguiente enlace podras encontrar mas información sobre [JSP ](https://www.ibm.com/developerworks/java/tutorials/j-introjsp/j-introjsp.html).
-
+## <a name="ejerservletjsp-id"></a>6.3 Ejercicio
 Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
 > * Model: Un Java Class que tendra la información de `Student`.
 > * Controller:  Un Servlet `StudentController` para la gestión de las peticiones y respuestas mediante el protocolo HTTP.
@@ -244,8 +253,7 @@ A continuación los pasos a seguir.
 
      ```
 
-* Creamos el Servlet `StudentController`
-       
+* Creamos el Servlet `StudentController`    
 
     ```java
         package com.hamp.javaee.controller;
@@ -373,58 +381,58 @@ A continuación los pasos a seguir.
 
 #### [Ir a Contenido](#content-id)
 ---
-## <a name="jsf-id"></a>Java Server Faces (JSF) y Context Dependency Injection (CDI)
+# <a name="jsfcdi-id"></a>7. Java Server Faces (JSF) y Context Dependency Injection (CDI)
+Contexts and Dependency Injection (CDI) se integra principalmente con `JavaServer Faces (JSF)` a través del `lenguaje de expresiones (EL)`. Permite que los `beans CDI` se expongan a través de los componentes EL-to-JSF unificados. También proporciona un contexto integrado para el ámbito de conversación que está activo durante las fases del ciclo de vida JSF estándar.
 
-* **Java Server Faces (JSF)**
+Para mas información sobre [lenguaje de expresiones (EL)](https://www.apuntesdejava.com/2014/10/tutorial-jsf-22-sesion-9-lenguaje-de.html) 
 
-    JSF es una tecnología que fué creada para simplificar la creación de interfaces web de usuario para aplicaciones web JavaEE.
+## <a name="jsf-id"></a>7.1. Java Server Faces (JSF)
+JSF es una tecnología que fué creada para simplificar la creación de interfaces web de usuario para aplicaciones web JavaEE.
 
-    Mediante ejemplos prácticos analizaremos las características de este framework, utilizando diferentes herramientas de desarrollo para crear nuestras aplicaciones web Java con JSF e integrarlas con otras tecnologías Java como EJB y JPA.
+Mediante ejemplos prácticos analizaremos las características de este framework, utilizando diferentes herramientas de desarrollo para crear nuestras aplicaciones web Java con JSF e integrarlas con otras tecnologías Java como EJB y JPA.
 
-    Algunas de las características principales de JSF son:
+Algunas de las características principales de JSF son:
 
-    * Es un marco de trabajo (framework) para crear aplicaciones JavaEE basadas en el patrón de diseño MVC (Modelo-Vista-Controlador) y utilizando la API de Servlets.
-    * Utiliza páginas JSP para generar las vistas, añadiendo una biblioteca de etiquetas propia para crear componentes reutilizables: JavaScript, HTML, CSS, … que podrán ser desplegados en cualquier tipo de cliente (navegadores, móviles, …), ahorrando mucho tiempo en el desarrollo de aplicaciones web. Este concepto se conoce como Render Kits.
-    * JSF resuelve validaciones, conversiones, mensajes de error e internacionalización (i18n).
-    * Es extensible, pudiendo crearse nuevos elementos de la interfaz o modificar los ya existentes. JSF dispone de varias implementaciones diferentes, incluyendo un conjunto de etiquetas y APIs estándar que forman el núcleo del framework. Algunas de las implementaciones son: PrimeFaces, RichFaces, IceFaces, cada una de las cuales contiene un número diferente de componentes.
-    * Soporte nativo para AJAX, por tanto, facilita el tratamiento de peticiones asíncronas.
-    * Soporte por defecto para el uso de la tecnología de Facelets.
-    Y lo que es más importante: forma parte del estándar J2EE.
+* Es un marco de trabajo (framework) para crear aplicaciones JavaEE basadas en el patrón de diseño MVC (Modelo-Vista-Controlador) y utilizando la API de Servlets.
+* Utiliza páginas JSP para generar las vistas, añadiendo una biblioteca de etiquetas propia para crear componentes reutilizables: JavaScript, HTML, CSS, … que podrán ser desplegados en cualquier tipo de cliente (navegadores, móviles, …), ahorrando mucho tiempo en el desarrollo de aplicaciones web. Este concepto se conoce como Render Kits.
+* JSF resuelve validaciones, conversiones, mensajes de error e internacionalización (i18n).
+* Es extensible, pudiendo crearse nuevos elementos de la interfaz o modificar los ya existentes. JSF dispone de varias implementaciones diferentes, incluyendo un conjunto de etiquetas y APIs estándar que forman el núcleo del framework. Algunas de las implementaciones son: PrimeFaces, RichFaces, IceFaces, cada una de las cuales contiene un número diferente de componentes.
+* Soporte nativo para AJAX, por tanto, facilita el tratamiento de peticiones asíncronas.
+* Soporte por defecto para el uso de la tecnología de Facelets.
 
-    **Arquitectura general**:
 
-    En el caso de JSF  la definición de la interfaz se realiza en forma de páginas XHTML con distintos tipos de etiquetas que veremos más adelante. Estas páginas se denominan páginas JSF. La siguiente figura muestra el funcionamiento de JSF para generar una página por primera vez.
+**Arquitectura general**:
 
-    El navegador realiza una petición a una determinada URL en la que reside la página JSF que se quiere mostrar. En el servidor un servlet que llamamos motor de JSF recibe la petición y construye un árbol de componentes a partir de la página JSF que se solicita. Este árbol de componentes replica en forma de objetos Java la estructura de la página JSF original y representa la estructura de la página que se va a devolver al navegador. Una vez construido el árbol de componentes, se ejecuta código Java en el servidor para rellenar los elementos del árbol con los datos de la aplicación. Por último, a partir del árbol de componentes se genera la página HTML que se envía al navegador.
+En el caso de JSF  la definición de la interfaz se realiza en forma de páginas XHTML con distintos tipos de etiquetas que veremos más adelante. Estas páginas se denominan páginas JSF. La siguiente figura muestra el funcionamiento de JSF para generar una página por primera vez.
 
-    **MVC con JSF**
-    * Lado del cliente:
+El navegador realiza una petición a una determinada URL en la que reside la página JSF que se quiere mostrar. En el servidor un servlet que llamamos motor de JSF recibe la petición y construye un árbol de componentes a partir de la página JSF que se solicita. Este árbol de componentes replica en forma de objetos Java la estructura de la página JSF original y representa la estructura de la página que se va a devolver al navegador. Una vez construido el árbol de componentes, se ejecuta código Java en el servidor para rellenar los elementos del árbol con los datos de la aplicación. Por último, a partir del árbol de componentes se genera la página HTML que se envía al navegador.
 
-        Vistas web: HTML, CSS.
-    * Lado  del servidor:
+**MVC con JSF**
+* Lado del cliente: 
 
-        Capa de Presentación: JSF, Primefaces.
+    Vistas web: HTML, CSS.
 
-        Capa de Negocio (objetos de negocio): EJB.
-
-        Capa de Datos (objetos entidad): JPA.
+* Lado  del servidor:   
+    Capa de Presentación: JSF, Primefaces.  
+    Capa de Negocio (objetos de negocio): EJB.  
+    Capa de Datos (objetos entidad): JPA.
 
 
     ![Getting Started](./images/21.png)
 
-* **Context Dependency Injection (CDI)**
+## <a name="cdi-id"></a>7.2. Context Dependency Injection (CDI)
 
-    Contexts and Dependency Injection (CDI) es el marco de inyección de dependencia primario de Java EE. Fue presentado con Java EE 6 en 2009. CDI se está convirtiendo lentamente en la columna vertebral de todos de Java EE. JSF 2.3, por ejemplo, ha desaprobado por completo su propio modelo de beans gestionados (@ManagedBean) por  la inyección de dependencias a favor de CDI mediante el uso de @Named.
+Contexts and Dependency Injection (CDI) es el marco de inyección de dependencia primario de Java EE. Fue presentado con Java EE 6 en 2009. CDI se está convirtiendo lentamente en la columna vertebral de todos de Java EE. JSF 2.3, por ejemplo, ha desaprobado por completo su propio modelo de beans gestionados (@ManagedBean) por  la inyección de dependencias a favor de CDI mediante el uso de @Named.
 
-    CDI se activa en una aplicación mediante la presencia de un archivo `beans.xml` dentro de ese módulo, tal como se define en la especificación `JSR 299`. Puede encontrar el archivo `beans.xml` en el directorio `WEB-INF`. Cuando se activa, el contenedor proporciona servicios tales como:
+CDI se activa en una aplicación mediante la presencia de un archivo `beans.xml` dentro de ese módulo, tal como se define en la especificación `JSR 299`. Puede encontrar el archivo `beans.xml` en el directorio `WEB-INF`. Cuando se activa, el contenedor proporciona servicios tales como:
 
-> * Gestión de contexto
-> * Inyección de dependencia de tipo seguro: se crea una instancia de un bean gestionado por CDI y se inyecta cuando sea necesario.
-> * Decoradores, que implementan una o más interfaces de bean y que pueden contener lógica empresarial. Los decoradores están inhabilitados de forma predeterminada. Puede tener varios decoradores por bean, y el orden se define mediante el archivo beans.xml.
-> * Enlaces de interceptor. Los interceptores, que se habilitan manualmente en el archivo beans.xml, se enlazan mediante un tipo de enlace de interceptor.
-> * Integración en archivos JavaServer Faces (JSF) y JavaServer Pages (JSP) utilizando el Lenguaje de Expresión (EL)
+* Gestión de contexto
+* Inyección de dependencia de tipo seguro: se crea una instancia de un bean gestionado por CDI y se inyecta cuando sea necesario.
+* Decoradores, que implementan una o más interfaces de bean y que pueden contener lógica empresarial. Los decoradores están inhabilitados de forma predeterminada. Puede tener varios decoradores por bean, y el orden se define mediante el archivo beans.xml.
+* Enlaces de interceptor. Los interceptores, que se habilitan manualmente en el archivo beans.xml, se enlazan mediante un tipo de enlace de interceptor.
+* Integración en archivos JavaServer Faces (JSF) y JavaServer Pages (JSP) utilizando el Lenguaje de Expresión (EL)
 
-    
+## <a name="ejerjsfcdi-id"></a>7.3. Ejercicio
 
 Bueno ahora si manos a la obra, Cabe indicar que este ejercicio sera implementado utilizando el Patrón MVC.
 
@@ -535,9 +543,9 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
         <?xml version="1.0"?>
         <beans bean-discovery-mode="all" version="1.1"
         xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"/>
-
-
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"         
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+        http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"/>
     ```
 
 * Creamos Java Class Modelo `Person`.
@@ -972,7 +980,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
         xmlns:f="http://java.sun.com/jsf/core"
         xmlns:h="http://java.sun.com/jsf/html"
         xmlns:p="http://primefaces.org/ui">
-
     <h:head></h:head>
     <body>
 
@@ -1073,11 +1080,24 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
 #### [Ir a Contenido](#content-id)
 ---
 
-## <a name="jdbc-id"></a>Java Database Connectivity (JDBC)
+# <a name="jdbc-id"></a>8. Java Database Connectivity (JDBC)
 JDBC es un API (Application programming interface) que describe o define una librería estándar para acceso a fuentes de datos, principalmente orientado a Bases de Datos relacionales que usan SQL (Structured Query Language). JDBC no sólo provee un interfaz para acceso a motores de bases de datos, sino que también define una arquitectura estándar, para que los fabricantes puedan crear los drivers que permitan a las aplicaciones java el acceso a los datos.
 
 Revisar: [JDBC](https://www.tutorialspoint.com/jdbc/)
     ![Getting Started](./images/30.jpg)
+
+## <a name="ejerjdbc-id"></a>8.1. Ejercicio
+
+* Debemos agregar la dependencia del `driver de mysql` al archivo `pom.xml`.
+
+```xml
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>5.1.6</version>
+</dependency>
+```
+        
 
 
 #### [Ir a Contenido](#content-id)
