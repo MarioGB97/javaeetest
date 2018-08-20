@@ -5,9 +5,8 @@
 4. [Patrones de diseño](#pat-id)
 5. [Proyecto](#pro-id)
 6. [Servlet-JavaServer Pages(JSP)](#sp-id)
-7. [JavaServer Faces(JSF) y Context Dependency Injection (CDI)](#jsf-id)
-
-
+7. [JavaServer Faces(JSF) y Context Dependency Injection (CDI)](#jsf-id)    
+8. [Java Database Connectivity (JDBC)](#jdbc-id)
 
 ---
 ## <a name="intro-id"></a>Introducción
@@ -203,30 +202,21 @@ A continuación los pasos a seguir.
 
 * Creamos el Java Class `Student`.
 
-    ![Getting Started](./images/10.png)
-
-    ![Getting Started](./images/11.png)
-
     ```java
-        package com.hamp.javaee.model;
+    package com.hamp.javaee.model;
 
-        public class Student {
-            
+        public class Student {           
             private int id;
             private String firstName;
             private String lastName;
-            
+                    
             // constructors, getters and setters  here
 
         }
 
-     ```
+    ```
 
 * Creamos el Java Class `StudentService`
-
-    ![Getting Started](./images/10.png)
-
-    ![Getting Started](./images/12.png)
 
     ```java
         package com.hamp.javaee.service;
@@ -255,12 +245,7 @@ A continuación los pasos a seguir.
      ```
 
 * Creamos el Servlet `StudentController`
-    
-    ![Getting Started](./images/13.png)
-
-    ![Getting Started](./images/14.png)
-
-    ![Getting Started](./images/16.png)
+       
 
     ```java
         package com.hamp.javaee.controller;
@@ -313,8 +298,6 @@ A continuación los pasos a seguir.
 
      ```
 * Creamos las vistas `index.jsp` y `result.jsp`
-
-    ![Getting Started](./images/13.png)
 
     ![Getting Started](./images/18.png)
 
@@ -559,8 +542,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
 
 * Creamos Java Class Modelo `Person`.
 
-    ![Getting Started](./images/22.png)
-
     ```java
     package com.hamp.javaee.model;
 
@@ -611,8 +592,7 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
 
 * Creamos interface DAO generica `IDAO`.
 
-    ![Getting Started](./images/27.png)
-
+    
     ```java
     package com.hamp.javaee.dao;
 
@@ -626,8 +606,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
 
 * Creamos Interface DAO  `IPersonDAO`.
 
-    ![Getting Started](./images/28.png)
-
     ```java
     package com.hamp.javaee.dao;
 
@@ -640,8 +618,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
     ```
 
 * Creamos Java Class DAO `PersonDAO`.
-
-    ![Getting Started](./images/23.png)
 
     ```java
         package com.hamp.javaee.dao.impl;
@@ -681,8 +657,7 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
     ```
 
 * Creamos interface Service `IPersonService`.
-    ![Getting Started](./images/30.png)
-
+    
     ```java
         package com.hamp.javaee.service;
 
@@ -698,8 +673,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
     ```
 
 * Creamos Java Class Service `PersonService`.
-
-    ![Getting Started](./images/24.png)
 
     ```java
         package com.hamp.javaee.service.impl;
@@ -733,8 +706,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
     ```
 
 * Creamos Java Class Controller `PersonController`.
-
-    ![Getting Started](./images/25.png)
 
     ```java
         package com.hamp.javaee.controller;
@@ -804,8 +775,6 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
 
     ```
 * Creamos Java Class Controller `IndexController`.
-
-    ![Getting Started](./images/31.png)
 
     ```java
         package com.hamp.javaee.controller;
@@ -1097,21 +1066,21 @@ Luego debes cambiar el contenido del archivo `web.xml` por el siguiente.
 
     * Ejecuta la aplicación dando click derecho al proyecto.
 
-        ![Getting Started](./images/40.png)
-
-        ![Getting Started](./images/41.png)
-
         ![Getting Started](./images/38.png)
 
         ![Getting Started](./images/39.png)
 
+#### [Ir a Contenido](#content-id)
+---
 
+## <a name="jdbc-id"></a>Java Database Connectivity (JDBC)
+JDBC es un API (Application programming interface) que describe o define una librería estándar para acceso a fuentes de datos, principalmente orientado a Bases de Datos relacionales que usan SQL (Structured Query Language). JDBC no sólo provee un interfaz para acceso a motores de bases de datos, sino que también define una arquitectura estándar, para que los fabricantes puedan crear los drivers que permitan a las aplicaciones java el acceso a los datos.
 
-
+Revisar: [JDBC](https://www.tutorialspoint.com/jdbc/)
+    ![Getting Started](./images/30.jpg)
 
 
 #### [Ir a Contenido](#content-id)
----
 
 
 
