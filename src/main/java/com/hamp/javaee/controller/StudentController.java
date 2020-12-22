@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.hamp.javaee.service.StudentService;
 
 
-@WebServlet("/StudentController")
+@WebServlet("/*")
 public class StudentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final StudentService studentService = new StudentService();
@@ -27,7 +27,7 @@ public class StudentController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.getWriter().append("hola");
 	}
 
 	
